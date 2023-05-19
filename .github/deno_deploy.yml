@@ -1,0 +1,30 @@
+name: Build & Deno Deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # This is required to allow the GitHub Action to authenticate with Deno Deploy.
+      contents: read
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      
+      - name: Generate manifest file for dynamic imports
+        run: |
+          deno run --allow-read --allow-write routes-manifest-generate.ts
+
+      - name: Deploy to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: fleeting-notes-plugin # the name of the project on Deno Deploy
+          entrypoint: webserver.ts # the entrypoint to deploy
