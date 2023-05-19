@@ -16,6 +16,9 @@ const corsHeaders = {
 }
 
 async function handler(req: Request): Promise<Response> {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders })
+  }
   const token = req.headers?.get("Authorization")?.replace("Bearer ", "") ?? '';
   const { data } = await supabase.auth.getUser(token);
   if (!data.user) {
