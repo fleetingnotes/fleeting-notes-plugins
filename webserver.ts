@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.155.0/http/server.ts";
 import importModule from './routes-manifest.ts'
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.11.0"
-import { PostHog } from "https://esm.sh/posthog-node";
+import { PostHog } from "https://esm.sh/posthog-node@2.6.0";
 import "https://deno.land/std@0.188.0/dotenv/load.ts";
 
 const supabase = createClient(
