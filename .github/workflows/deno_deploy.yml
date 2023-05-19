@@ -26,5 +26,5 @@ jobs:
       - name: Deploy to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: fleeting-notes-plugin # the name of the project on Deno Deploy
+          project: fleeting-notes-plugins # the name of the project on Deno Deploy
           entrypoint: webserver.ts # the entrypoint to deploy
