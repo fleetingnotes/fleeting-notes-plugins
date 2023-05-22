@@ -4,7 +4,8 @@ export default (request: Request) : Response => {
   }
   var exampleNote = {
     "note": {
-      "content": "asdf"
+      "content": "asdf",
+      "source": "hello world",
     }
   }
   return new Response(JSON.stringify(exampleNote));
