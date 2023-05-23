@@ -1,5 +1,6 @@
 # Fleeting Notes Plugin
 
+Documentation to Create Your Own Plugin: https://www.fleetingnotes.app/docs/plugins/create-your-own-plugin
 ## Local webserver setup
 1. Install [deno](https://deno.com/manual@v1.33.4/getting_started/installation)
 2. Add `.env` file

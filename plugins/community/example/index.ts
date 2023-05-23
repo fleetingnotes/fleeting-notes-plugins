@@ -1,12 +1,10 @@
 export default async (request: Request) : Promise<Response> => {
-  if (request.method == 'GET') {
-    return new Response("hello world");
+  var json = await request.json()
+  var metadata = json['metadata'];
+  var note = json['note'];
+  if (!note) {
+    return new Response("Couldn't find note in request", { status: 400 });
   }
-  var exampleNote = {
-    "note": {
-      "content": "asdf",
-      "source": "hello world",
-    }
-  }
-  return new Response(JSON.stringify(exampleNote));
+  note.content = `${note.content}\nhello from the example plugin!\nhere is ur metdata: ${metadata}`;
+  return new Response(JSON.stringify(note));
 }
