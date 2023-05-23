@@ -1,4 +1,4 @@
-export default (request: Request) : Response => {
+export default async (request: Request) : Promise<Response> => {
   if (request.method == 'GET') {
     return new Response("hello world");
   }

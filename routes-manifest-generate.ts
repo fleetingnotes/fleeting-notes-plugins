@@ -35,7 +35,7 @@ const writeManifest = async () => {
   ${routes.map((module) =>
       `import ${moduleIdentifier(module)} from '${module}';`).join('\n')}
 
-  type Route = { default: (request: Request) => Response }
+  type Route = { default: (request: Request) => Promise<Response> }
 
   const routes: {[key: string]: Route} = {
   ${routes.map((module) =>

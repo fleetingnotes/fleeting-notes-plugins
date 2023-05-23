@@ -39,7 +39,7 @@ async function handler(req: Request): Promise<Response> {
 
   // call module
   if (module) {
-    const res =  module.default(req);
+    const res = await module.default(req);
     for (const [key, value] of Object.entries(corsHeaders)) {
       res.headers.set(key as string, value as string);
     }
