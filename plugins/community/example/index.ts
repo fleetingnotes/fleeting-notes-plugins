@@ -6,5 +6,5 @@ export default async (request: Request) : Promise<Response> => {
     return new Response("Couldn't find note in request", { status: 400 });
   }
   note.content = `${note.content}\nhello from the example plugin!\nhere is ur metdata: ${metadata}`;
-  return new Response(JSON.stringify(note));
+  return new Response(JSON.stringify({note}));
 }
