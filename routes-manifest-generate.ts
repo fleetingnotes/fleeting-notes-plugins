@@ -11,7 +11,7 @@ const getRoutes = async (dir: string): Promise<Array<string>> => {
   for await (const entry of entries) {
     const path = `${dir}/${entry.name}`;
 
-    if (entry.isFile && path.endsWith('.ts')) {
+    if (entry.isFile && path.endsWith('index.ts')) {
       routes.push(path);
     } else if (entry.isDirectory) {
       const nestedRoutes = await getRoutes(path);
