@@ -1,7 +1,7 @@
 export default async (request: Request) : Promise<Response> => {
-  var json = await request.json()
-  var metadata = json['metadata'];
-  var note = json['note'];
+  const json = await request.json()
+  const metadata = json['metadata'];
+  const note = json['note'];
   if (!note) {
     return new Response("Couldn't find note in request", { status: 400 });
   }

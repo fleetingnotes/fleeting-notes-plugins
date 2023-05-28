@@ -6,7 +6,7 @@ import "https://deno.land/std@0.188.0/dotenv/load.ts";
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  Deno.env.get("SUPABASE_ANON_PUBLIC_KEY")!
 );
 const posthog = new PostHog(Deno.env.get("POSTHOG_CLIENT_KEY") || '');
 
