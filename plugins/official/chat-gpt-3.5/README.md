@@ -1,5 +1,5 @@
 # ChatGPT Plugin
-The ChatGPT plugin gives you access to OpenAI's ChatGPT from within Fleeting Notes! This plugin passes the content of your note into ChatGPT and also gives you the option to adjust a pre-defined prompt in the metadata.
+This plugin passes the content of your note into ChatGPT and also gives you the option to adjust a pre-defined prompt in the metadata.
 
 ## Installation
 Follow the [instructions to add a plugin](https://www.fleetingnotes.app/docs/plugins/add-a-plugin). Then set the following fields:
