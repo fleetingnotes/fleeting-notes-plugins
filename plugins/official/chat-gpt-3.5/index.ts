@@ -1,5 +1,4 @@
 import { chatGpt3 } from "../../../utils.ts";
-import { OpenAI } from "https://deno.land/x/openai@1.3.4/mod.ts";
 import "https://deno.land/std@0.188.0/dotenv/load.ts";
 
 export default async (request: Request) : Promise<Response> => {
