@@ -17,12 +17,12 @@ async function fetchWebPage(url: string) {
 
 
 async function summarizeText(text: string, systemPrompt:string) {
-  if (text.length < 15000) {
+  if (text.length < 12000) {
     return chatGpt3(text, systemPrompt);
   } else if (text.length > 100000) {
     throw new Error('Source is too long (> 100k characters)');
   }
-  const chunks = text.match(/[\s\S]{1,15000}/g) || []; 
+  const chunks = text.match(/[\s\S]{1,12000}/g) || []; 
   const responses = await Promise.all(chunks.map((c: string) => {
     return chatGpt3('Summarize:\n' +  c);
   }));
