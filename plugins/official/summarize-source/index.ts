@@ -1,5 +1,4 @@
-import { chatGpt3 } from "../../../utils.ts";
-import { validateURI } from "../../../validations.ts";
+import { chatGpt3, validateURI } from "../../../utils.ts";
 import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 import { Readability } from "https://esm.sh/@mozilla/readability@0.4.4";
 import "https://deno.land/std@0.188.0/dotenv/load.ts";
