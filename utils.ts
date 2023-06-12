@@ -24,6 +24,18 @@ export async function chatGpt3(
   return message || "";
 }
 
+export async function chatGpt3Whisper(audioFile: string): Promise<string> {
+  const API_KEY = Deno.env.get("OPEN_AI_KEY")!;
+  console.log("API_KEY", API_KEY);
+  const openAI = new OpenAI(API_KEY);
+
+  const transcription = await openAI.createTranscription({
+    model: "whisper-1",
+    file: audioFile,
+  });
+  return transcription.text.trim();
+}
+
 type ErrorMessage = {
   passes: boolean;
   error: string | null;
