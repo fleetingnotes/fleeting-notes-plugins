@@ -10,7 +10,6 @@ export default async (request: Request): Promise<Response> => {
   }
   try {
     const { fullPath } = await download(source);
-    console.log(fullPath);
     const message = await chatGpt3Whisper(fullPath);
     return new Response(message);
   } catch (e) {

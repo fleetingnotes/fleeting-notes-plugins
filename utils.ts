@@ -5,7 +5,6 @@ export async function chatGpt3(
   systemPrompt?: string,
 ): Promise<string> {
   const API_KEY = Deno.env.get("OPEN_AI_KEY")!;
-  console.log("API_KEY", API_KEY);
   const openAI = new OpenAI(API_KEY);
   const messages: { role: "system" | "user"; content: string }[] =
     (systemPrompt)
@@ -26,7 +25,6 @@ export async function chatGpt3(
 
 export async function chatGpt3Whisper(audioFile: string): Promise<string> {
   const API_KEY = Deno.env.get("OPEN_AI_KEY")!;
-  console.log("API_KEY", API_KEY);
   const openAI = new OpenAI(API_KEY);
 
   const transcription = await openAI.createTranscription({
