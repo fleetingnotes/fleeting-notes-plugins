@@ -1,5 +1,11 @@
-import { download } from "https://deno.land/x/download@v2.0.2/mod.ts";
 import { chatGpt3Whisper, validateURI } from "../../../utils.ts";
+
+async function fetchFile(url: string) {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const file = new File([blob], url.substring(url.lastIndexOf("/") + 1));
+  return file;
+}
 
 export default async (request: Request): Promise<Response> => {
   const json = await request.json();
@@ -9,8 +15,8 @@ export default async (request: Request): Promise<Response> => {
     return new Response(error, { status: 400 });
   }
   try {
-    const { fullPath } = await download(source);
-    const message = await chatGpt3Whisper(fullPath);
+    const data = await fetchFile(source);
+    const message = await chatGpt3Whisper(data);
     return new Response(message);
   } catch (e) {
     return new Response(e, { status: 400 });

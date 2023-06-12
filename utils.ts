@@ -23,7 +23,7 @@ export async function chatGpt3(
   return message || "";
 }
 
-export async function chatGpt3Whisper(audioFile: string): Promise<string> {
+export async function chatGpt3Whisper(audioFile: File): Promise<string> {
   const API_KEY = Deno.env.get("OPEN_AI_KEY")!;
   const openAI = new OpenAI(API_KEY);
 
