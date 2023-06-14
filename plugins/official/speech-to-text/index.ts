@@ -1,7 +1,13 @@
 import { chatGpt3Whisper, validateURI } from "../../../utils.ts";
+import { contentType } from "https://deno.land/x/media_types@v2.13.0/mod.ts";
 
 async function fetchFile(url: string) {
   const response = await fetch(url);
+  const headers = response.headers;
+  const mimeType = headers.get("content-type");
+  if (mimeType && !contentType(mimeType).startsWith("audio/")) {
+    throw new Error("Source is not an audio file");
+  }
   const blob = await response.blob();
   const file = new File([blob], url.substring(url.lastIndexOf("/") + 1));
   return file;
