@@ -45,7 +45,7 @@ export default async (request: Request): Promise<Response> => {
       ],
     });
     if (!output?.responses || output?.responses.length === 0) {
-      throw new Error("Error getting response try with nother source");
+      throw new Error("Error getting response try with another source");
     }
     return new Response(
       output?.responses[0].fullTextAnnotation?.text,
