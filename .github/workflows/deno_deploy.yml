@@ -19,14 +19,9 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Install Tesseract
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y tesseract-ocr
-
       - name: Generate manifest file for dynamic imports
         run: |
-          deno run --allow-read --allow-write --allow-net routes-manifest-generate.ts
+          deno run --allow-read --allow-write routes-manifest-generate.ts
 
       - name: Deploy to Deno Deploy
         uses: denoland/deployctl@v1
