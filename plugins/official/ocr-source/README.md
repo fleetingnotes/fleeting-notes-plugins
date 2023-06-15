@@ -1,7 +1,5 @@
 # OCR source Plugin
-This plugin utilizes Tesseract to fetch and convert the source of your image in text.
-
-**Note**: Supported formats https://github.com/tesseract-ocr/tessdoc/blob/main/InputFormats.md
+This plugin utilizes Google Vision to fetch and convert the source of your image in text.
 
 ## Installation
 Follow the [instructions to add a plugin](https://www.fleetingnotes.app/docs/plugins/add-a-plugin). Then set the following fields:
