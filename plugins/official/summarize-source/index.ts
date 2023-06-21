@@ -1,4 +1,5 @@
 import { chatGpt3, validateURI } from "../../../utils.ts";
+import { isYouTubeURL, transcriptYoutubeVideo } from "./youtubeTranscript.ts";
 import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 import { Readability } from "https://esm.sh/@mozilla/readability@0.4.4";
 import "https://deno.land/std@0.188.0/dotenv/load.ts";
@@ -36,17 +37,26 @@ export default async (request: Request): Promise<Response> => {
   if (!passes) {
     return new Response(error, { status: 400 });
   }
-
+  let textToSummarize = "";
   const html = await fetchWebPage(source);
-  const text = extractContent(html);
-  if (text.length == 0) {
-    return new Response("Failed to extract text from source", { status: 400 });
+  if (isYouTubeURL(source)) {
+    const text = await transcriptYoutubeVideo(html);
+    textToSummarize = text;
+  } else {
+    const text = extractContent(html);
+    if (text.length == 0) {
+      return new Response("Failed to extract text from source", {
+        status: 400,
+      });
+    }
+    textToSummarize = text;
   }
+
   const systemPrompt = metadata ||
     "Summarize the following text with the most unique and helpful points, into a bullet list of key points and takeaways";
 
   try {
-    const message = await summarizeText(text, systemPrompt);
+    const message = await summarizeText(textToSummarize, systemPrompt);
     if (!message) {
       return new Response("No message from OpenAI", { status: 400 });
     }

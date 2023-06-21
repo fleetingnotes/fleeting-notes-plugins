@@ -18,4 +18,4 @@ Summarize the following text with the most unique and helpful points, into a bul
 Once the Summarize Source plugin for Fleeting Notes is installed and configured, you can start utilizing its capabilities within your notes. Here are a few examples of how to use the plugin:
 
 1. **Summarize Webpages**: Summarize web pages into key points
-2. **Summarize Youtube Videos**: To be released soon... (Email me if you really want this matthew@fleetingnotes.app)
+2. **Summarize Youtube Videos**: Set the source with a youtube video
