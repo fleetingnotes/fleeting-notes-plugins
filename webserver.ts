@@ -1,31 +1,35 @@
 import { serve } from "https://deno.land/std@0.155.0/http/server.ts";
-import importModule from './routes-manifest.ts'
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.11.0"
+import importModule from "./routes-manifest.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.11.0";
 import { PostHog } from "https://esm.sh/posthog-node@2.6.0";
 import "https://deno.land/std@0.188.0/dotenv/load.ts";
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_ANON_PUBLIC_KEY")!
+  Deno.env.get("SUPABASE_ANON_PUBLIC_KEY")!,
 );
-const posthog = new PostHog(Deno.env.get("POSTHOG_CLIENT_KEY") || '');
+const posthog = new PostHog(Deno.env.get("POSTHOG_CLIENT_KEY") || "");
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+};
 
 async function handler(req: Request): Promise<Response> {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders })
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
   }
-  const token = req.headers?.get("Authorization")?.replace("Bearer ", "") ?? '';
+  const token = req.headers?.get("Authorization")?.replace("Bearer ", "") ?? "";
   const { data } = await supabase.auth.getUser(token);
   if (!data.user) {
-    return new Response('Permission Denied~', { status: 403, headers: corsHeaders })
+    return new Response("Permission Denied~", {
+      status: 403,
+      headers: corsHeaders,
+    });
   }
   const pathname = new URL(req.url).pathname;
-  const module = importModule(`.${pathname.replace(/\/$/, '')}/index.ts`);
+  const module = importModule(`.${pathname.replace(/\/$/, "")}/index.ts`);
   posthog.capture({
     distinctId: data.user.id,
     event: `plugin called`,
@@ -33,8 +37,8 @@ async function handler(req: Request): Promise<Response> {
       pathname: pathname,
       $set: {
         email: data.user.email,
-      }
-    }
+      },
+    },
   });
 
   // call module
@@ -45,7 +49,10 @@ async function handler(req: Request): Promise<Response> {
     }
     return res;
   }
-  return new Response('Function Not Found~', { status: 404, headers: corsHeaders })
+  return new Response("Function Not Found~", {
+    status: 404,
+    headers: corsHeaders,
+  });
 }
 
 serve(handler);
