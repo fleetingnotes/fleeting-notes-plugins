@@ -89,6 +89,7 @@ export async function transcriptYoutubeVideo(html: string): Promise<string> {
     .transcriptRenderer.body.transcriptBodyRenderer.cueGroups;
 
   const text = transcripts.map((
+    // deno-lint-ignore no-explicit-any
     cue: any,
   ) => (cue.transcriptCueGroupRenderer.cues[0].transcriptCueRenderer
     .cue.simpleText)
