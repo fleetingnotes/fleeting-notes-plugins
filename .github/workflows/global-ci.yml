@@ -42,3 +42,18 @@ jobs:
 
       - name: Checking format
         run: deno fmt --check
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Running tests
+        run: deno test --allow-all
