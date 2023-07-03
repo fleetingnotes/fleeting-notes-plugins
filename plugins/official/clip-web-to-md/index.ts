@@ -1,6 +1,7 @@
 import { validateURI } from "../../../utils.ts";
 import { Readability } from "https://esm.sh/@mozilla/readability@0.4.4";
-import TurndownService from "https://cdn.skypack.dev/turndown@7.1.2";
+import TurndownService from "https://cdn.skypack.dev/turndown@7.1.1";
+import { gfm } from "https://cdn.skypack.dev/@guyplusplus/turndown-plugin-gfm@1.0.7";
 import { JSDOM } from "https://jspm.dev/jsdom@21.0.0";
 
 declare global {
@@ -32,6 +33,7 @@ export default async (request: Request): Promise<Response> => {
     const reader = new Readability(dom.window.document);
     const article = reader.parse();
     const turndownService = new TurndownService();
+    turndownService.use(gfm);
     const markdown = turndownService.turndown(article?.content);
     return new Response(markdown);
   } catch (e) {
