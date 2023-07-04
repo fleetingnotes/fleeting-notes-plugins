@@ -1,17 +1,8 @@
 import { validateURI } from "../../../utils.ts";
 import { Readability } from "https://esm.sh/@mozilla/readability@0.4.4";
-import TurndownService from "https://cdn.skypack.dev/turndown@7.1.1";
+import TurndownService from "https://cdn.skypack.dev/turndown@7.1.2";
 import { gfm } from "https://cdn.skypack.dev/@guyplusplus/turndown-plugin-gfm@1.0.7";
-import { JSDOM } from "https://jspm.dev/jsdom@16.6.0";
-
-declare global {
-  // deno-lint-ignore no-explicit-any
-  const document: any;
-  interface Window {
-    // deno-lint-ignore no-explicit-any
-    document: any;
-  }
-}
+import { DOMParser } from "https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts";
 
 async function fetchWebPage(url: string): Promise<string> {
   const response = await fetch(url);
@@ -28,15 +19,22 @@ export default async (request: Request): Promise<Response> => {
   }
   const html = await fetchWebPage(source);
   try {
-    window.document = new JSDOM().window.document;
-    const dom = new JSDOM(html);
-    const reader = new Readability(dom.window.document);
-    const article = reader.parse();
+    const dom = new DOMParser().parseFromString(html, "text/html");
+    const article = new Readability(dom).parse();
+    if (!article?.content) {
+      throw new Error("Source cannot be read");
+    }
+
+    const domWithReadability = new DOMParser().parseFromString(
+      article?.content,
+      "text/html",
+    );
     const turndownService = new TurndownService();
     turndownService.use(gfm);
-    const markdown = turndownService.turndown(article?.content);
+    const markdown = turndownService.turndown(domWithReadability);
     return new Response(markdown);
   } catch (e) {
+    console.log(e);
     return new Response(e, { status: 400 });
   }
 };
