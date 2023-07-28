@@ -3,7 +3,7 @@ import { ErrorMessage, validateURI } from "../../../utils.ts";
 interface InputData {
   method?: string;
   url: string;
-  headers?: Record<string, any>;
+  headers?: Record<string, string>;
   body: string | null;
 }
 
