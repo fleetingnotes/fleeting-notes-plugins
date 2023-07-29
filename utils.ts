@@ -34,10 +34,11 @@ export async function chatGpt3Whisper(audioFile: File): Promise<string> {
   return transcription.text.trim();
 }
 
-type ErrorMessage = {
+export type ErrorMessage = {
   passes: boolean;
   error: string | null;
 };
+
 export function validateURI(uri: string): ErrorMessage {
   if (!uri) {
     return { passes: false, error: "Source field empty" };
@@ -45,8 +46,7 @@ export function validateURI(uri: string): ErrorMessage {
   try {
     new URL(uri);
     return { passes: true, error: null };
-  } catch (e) {
-    console.log(e);
+  } catch (_) {
     return { passes: false, error: "Source field is not a valid Url" };
   }
 }
