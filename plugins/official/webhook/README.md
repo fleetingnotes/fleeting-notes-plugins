@@ -22,6 +22,5 @@ Once the Webhook plugin for Fleeting Notes is installed and configured, you can
 start utilizing it. Here are a few examples of how to use the plugin:
 
 1. **URL**: https://example.com/data
-2. **Object URL**:'{"url": "https://example.com/data", "method": "GET",
-   "headers": {"Content-Type": "application/json" }, "body": "Request body data"
-   }'
+2. **Object
+   URL**:`'{"url": "https://example.com/data", "method": "GET", "headers": {"Content-Type": "application/json" }, "body": "Request body data" }'`
