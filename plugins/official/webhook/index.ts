@@ -4,7 +4,7 @@ interface InputData {
   method?: string;
   url: string;
   headers?: Record<string, string>;
-  body: string | null;
+  body?: string | null;
 }
 
 function validateInputData(inputData: InputData): ErrorMessage {
@@ -48,14 +48,29 @@ async function fetchUri(
   return html;
 }
 
+function parseStringOrJSON(input: string): string | InputData {
+  try {
+    const parsedObject = JSON.parse(input);
+    return parsedObject;
+  } catch (_) {
+    return input;
+  }
+}
+
 export default async (request: Request): Promise<Response> => {
   const json = await request.json();
   const metadata = json["metadata"];
-  let inputData = metadata;
-  if (typeof metadata === "string") {
+  if (!metadata) {
+    return new Response("Invalid metadata", { status: 400 });
+  }
+  const convertedMetadata = parseStringOrJSON(metadata);
+  let inputData: InputData;
+  if (typeof convertedMetadata === "string") {
     inputData = {
-      url: metadata,
+      url: convertedMetadata,
     };
+  } else {
+    inputData = convertedMetadata;
   }
   const { passes, error } = validateInputData(inputData);
   if (!passes) {
