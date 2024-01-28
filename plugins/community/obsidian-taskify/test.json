@@ -1,0 +1,8 @@
+{
+    "metadata": "some metadata",
+    "note": {
+        "title": "title",
+        "content": "- [ ] This is a task\n- [ ] This is a task with a due date 2024-02-01\n- [ ] This is an Obsidian Task ➕ 2024-01-28 📅 2024-01-29",
+        "source": "source"
+    }
+}
