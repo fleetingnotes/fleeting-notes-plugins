@@ -1,3 +1,6 @@
+// Fleeting Notes plugin to convert simple checkbox tasks to Obsidian Task format
+// kjarnot - 2024-01-28
+
 function formatISODate(date: Date): string {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -12,12 +15,18 @@ export default async (request: Request): Promise<Response> => {
     let today = new Date();
     let todayISO = formatISODate(today);
 
+    if (!note) {
+        return new Response("Couldn't find note in request", { status: 400 });
+    }
+
     // Step through each line in content and look for checkboxes
     const lines = content.split('\n');
     const newlines : string[] = [];
     for (let line of lines) {
         console.log('line = ' + line);
         let newline = '';
+
+        // Is this a checkbox task?
         if (line.startsWith('- [ ] ')) {
             // Look for the ➕ emoji.  If it is not in line, we need to format the line.
             if (!line.includes('➕')) {
